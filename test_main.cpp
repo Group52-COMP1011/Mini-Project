@@ -49,7 +49,7 @@ int main() {
         
         if(modeNum==1){
             
-            input==1;
+            input=1;
             cout << "Please type keyword of course ID: ";
             cin >> keyword;
             vector <course_info_t> result = find_mode1(data, keyword);
@@ -57,7 +57,7 @@ int main() {
             standardOut(result);
             
         }else if(modeNum==2){
-            input==1;
+            input=1;
             cout << "Please type keyword of course title: ";
             
             vector <course_info_t> result = find_mode2(data, keyword);
@@ -65,7 +65,7 @@ int main() {
             
             
         }else if(modeNum==3){
-            input==1;
+            input=1;
             cout << "Please type keyword of course credit number: ";
             cin >> keyword2;
             
@@ -73,7 +73,7 @@ int main() {
             standardOut(result);
             
         }else if(modeNum==4){
-            input==1;
+            input=1;
             cout << "Please type keyword of course level: ";
             cin >> keyword2;
             
