@@ -23,35 +23,99 @@ ostream &operator<<(ostream &out, const course_info_t &c) {
 
 vector<course_info_t> load_data();
 
-vector<course_info_t> find_all(const vector<course_info_t> &data, const string &keyword);
+vector<course_info_t> find_mode1(const vector<course_info_t> &data, const string &keyword);
+vector<course_info_t> find_mode2(const vector<course_info_t> &data, int Num);
+vector<course_info_t> find_mode3(const vector<course_info_t> &data, int Num);
 
 int main() {
+    string keyword;// keyword is used for string input
+    int modeNum, keyword2;// keyword2 is used for numeric input
+    int input=0;
+    
     vector <course_info_t> data = load_data();
-    cout << "              Group 52                  "<<endl;
-    cout << "========================================"<<endl;
-    cout << "type the keyword : ";
-    string keyword;
-    while (cin >> keyword) {
-        vector <course_info_t> result = find_all(data, keyword);
-        if (result.empty()) {
-            cout << "no results are found" << endl;
-        } else {
-            cout << "find " << result.size() << " results" << endl;
+    cout << "       Undergraduate course search in COMP      "<<endl;
+    cout << "================================================================="<<endl;
+    cout << "Three search modes offered by Group 52" << endl;
+    cout << "1. Search related courses by typing keyword(3) of course ID or title\n"<< endl;
+    cout << "2. Search related courses by typing keyword of course credit number \n"<< endl;
+    cout << "3. Search related courses by typing keyword of course level \n"<< endl;
+    
+    while(input==0){
+        cout << "Please type in mode numebr: ";
+        cin >> modeNum;
+        
+        if(modeNum==1){
+            
+            input==1;
+            cout << "Please type keyword(s) of course ID or title: ";
+            while (cin >> keyword) {
+                vector <course_info_t> result = find_mode1(data, keyword);
+                if (result.empty()) {
+                    cout << "No related course are found" << endl;
+                } else {
+                    cout << "Found " << result.size() << " results" << endl;
+                }
+                for (int i = 0; i < result.size(); i++) {
+                    cout << i + 1 << '/' << result.size() << endl;
+                    cout << result[i] << endl;
+                }
+                cout << "type the keyword: ";
+            }
+            for (const course_info_t &info:data) {
+                cout << info << endl;
+            }
+
+        }else if(modeNum==2){
+            input==1;
+            cout << "Please type keyword(s) of course credit number: ";
+            cin >> keyword2;
+            
+            vector <course_info_t> result = find_mode2(data, keyword2);
+            if (result.empty()) {
+                cout << "No results are found" << endl;
+            } else {
+                cout << "Found " << result.size() << " results" << endl;
+            }
+            for (int i = 0; i < result.size(); i++) {
+                cout << i + 1 << '/' << result.size() << endl;
+                cout << result[i] << endl;
+            }
+            cout << "type the keyword: ";
+            
+            for (const course_info_t &info:data) {
+                cout << info << endl;
+            }
+
+        }else if(modeNum==3){
+            input==1;
+            cout << "Please type keyword(s) of course level: ";
+            cin >> keyword2;
+            
+            vector <course_info_t> result = find_mode2(data, keyword2);
+            if (result.empty()) {
+                cout << "No results are found" << endl;
+            } else {
+                cout << "Found " << result.size() << " results" << endl;
+            }
+            for (int i = 0; i < result.size(); i++) {
+                cout << i + 1 << '/' << result.size() << endl;
+                cout << result[i] << endl;
+            }
+            cout << "type the keyword: ";
+            
+            for (const course_info_t &info:data) {
+                cout << info << endl;
+            }
+
+        }else{
+            cout << "Wrong input, please input again!" <<endl;
         }
-        for (int i = 0; i < result.size(); i++) {
-            cout << i + 1 << '/' << result.size() << endl;
-            cout << result[i] << endl;
-        }
-        cout << "type the keyword: ";
-    }
-    for (const course_info_t &info:data) {
-        cout << info << endl;
     }
     return 0;
 }
 
-
-vector<course_info_t> find_all(const vector<course_info_t> &data, const string &keyword) {//keyword from title
+// keyword from ID and title
+vector<course_info_t> find_mode1(const vector<course_info_t> &data, const string &keyword) {
     vector <course_info_t> result;
     for (const course_info_t &info : data) {
         if (info.title.find(keyword) != string::npos || info.code.find(keyword) != string::npos) {
@@ -61,6 +125,27 @@ vector<course_info_t> find_all(const vector<course_info_t> &data, const string &
     return result;
 }
 
+// keyword from credit
+vector<course_info_t> find_mode2(const vector<course_info_t> &data, int Num) {
+    vector <course_info_t> result;
+    for (const course_info_t &info : data) {
+        if (info.credit==Num) {
+            result.push_back(info);
+        }
+    }
+    return result;
+}
+
+// keyword from level
+vector<course_info_t> find_mode3(const vector<course_info_t> &data, int Num) {
+    vector <course_info_t> result;
+    for (const course_info_t &info : data) {
+        if (info.level==Num) {
+            result.push_back(info);
+        }
+    }
+    return result;
+}
 
 vector<course_info_t> load_data() {
     vector <course_info_t> data;
