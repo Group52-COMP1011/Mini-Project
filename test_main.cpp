@@ -24,7 +24,7 @@ ostream &operator<<(ostream &out, const course_info_t &c) {
 
 vector<course_info_t> load_data();
 vector<course_info_t> find_mode1(const vector<course_info_t> &data, const string &keyword);
-vector<course_info_t> find_mode2(const vector<course_info_t> &data, const string &keyword);
+vector<course_info_t> find_mode2(const vector<course_info_t> &data, string &keyword);
 vector<course_info_t> find_mode3(const vector<course_info_t> &data, int Num);
 vector<course_info_t> find_mode4(const vector<course_info_t> &data, int Num);
 void standardOut(const vector<course_info_t> &result);
@@ -59,7 +59,7 @@ int main() {
         }else if(modeNum==2){
             input=1;
             cout << "Please type keyword of course title: ";
-            
+            cin >> keyword;
             vector <course_info_t> result = find_mode2(data, keyword);
             standardOut(result);
             
@@ -83,6 +83,7 @@ int main() {
 
         }else{
             cout << "Wrong input, please input again!" <<endl;
+            input=1;
         }
     }
     return 0;
@@ -100,10 +101,28 @@ vector<course_info_t> find_mode1(const vector<course_info_t> &data, const string
 }
 
 // keyword from course title
-vector<course_info_t> find_mode2(const vector<course_info_t> &data, const string &keyword) {
+vector<course_info_t> find_mode2(const vector<course_info_t> &data, string &keyword) {
     vector <course_info_t> result;
+    string temp;
+    int length=keyword.length();
+    int length2;
+    for(int i=0;i<length;i++){
+        int c=keyword[i];
+        if(isupper(c)){
+            keyword[i]=tolower(c);
+        }
+    }
+    // case insensitive
     for (const course_info_t &info : data) {
-        if (info.title.find(keyword) != string::npos) {
+        temp=info.title;
+        length2=temp.length();
+        for(int j=0;j<length2;j++){
+            int d=temp[j];
+            if(isupper(d)){
+                temp[j]=tolower(d);
+            }
+        }
+        if (temp.find(keyword) != string::npos) {
             result.push_back(info);
         }
     }
